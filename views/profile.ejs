@@ -1,0 +1,63 @@
+
+<% include ./partials/header.ejs %>
+<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+
+  <div class="container mt-4">
+    <div id="profile_pic">
+      <i id="pencilicon" class="fa fa-pencil"></i>
+      <img src="<%=data.profile_pic %>">
+    </div>
+    <form id="formprofile" action="/uploadsprofilePic" method="POST" enctype="multipart/form-data">
+      <input id="uploadsprofile" name="file" type="file">
+      <input id="profilesubmit" type="submit">
+    </form>
+     
+    </div>
+
+<div class="container">
+    
+    <h3> <%=username%> welcome on socialhub</h3>
+    <hr>
+    <h4 class="mt-4" >write post</h4>
+
+    <form class="form-group mt-3 " action="/createPost" method="POST" >
+        <div class="mb-3">
+          <textarea style="resize: none;" class="form-control" name="post" id="validationTextarea" placeholder="write something about your day,life,event..."></textarea>
+          
+        </div> 
+        <button class="btn btn-primary" type="submit">Submit</button>   
+      </form>
+
+      <hr><hr>
+
+    <%  post.reverse().forEach(function(val){  %>
+        <div class="card ">
+          <div class="card-body">
+            <h5 class="card-title"><%= val.name %></h5>
+            <p class="card-text"><%= val.post %></p>
+            <small><%= val.likes.length%> Likes</small>
+            <br><br>
+            <a href="<%='/like/' + val._id %>" class="btn btn-success">Like</a>
+          </div>
+        </div>
+  
+     <% })  %>
+   
+</div>
+
+
+<script>
+  var pencilicon = document.querySelector('#pencilicon');
+  var uploadsprofile = document.querySelector('#uploadsprofile')
+  pencilicon.addEventListener('click', function(){
+    uploadsprofile.click();
+  })
+
+  uploadsprofile.addEventListener('change', function(){
+    profilesubmit.click();
+  })
+</script>
+
+
+
+<% include ./partials/footer.ejs %>
